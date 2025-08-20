@@ -33,14 +33,15 @@ palette = sns.color_palette("crest", n_colors=len(df_long["Quarter"].unique()))
 # ------------------------
 # Create barplot
 # ------------------------
-plt.figure(figsize=(8, 8))   # 512x512 at dpi=64
+fig, ax = plt.subplots(figsize=(8, 8), dpi=64)  # 8in * 64dpi = 512px
 
-ax = sns.barplot(
+sns.barplot(
     data=df_long,
     x="Product",
     y="Sales",
     hue="Quarter",
-    palette=palette
+    palette=palette,
+    ax=ax
 )
 
 # Titles and labels
@@ -52,7 +53,6 @@ ax.set_ylabel("Sales (Units)", fontsize=14)
 ax.legend(title="Quarter", loc="upper left", bbox_to_anchor=(1, 1))
 
 # ------------------------
-# Save chart
+# Save chart (exact 512x512)
 # ------------------------
-plt.tight_layout()
-plt.savefig("chart.png", dpi=64, bbox_inches="tight")  # 8in*64dpi = 512px
+fig.savefig("chart.png", dpi=64)  # No bbox_inches, so exact size is preserved
